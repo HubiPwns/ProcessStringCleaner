@@ -47,7 +47,7 @@ bool ScanAndClean(HANDLE hProc, LPCVOID startAddr, LPCVOID endAddr, const std::s
         if (accessible) {
             buffer.resize(mbi.RegionSize);
             if (ReadProcessMemory(hProc, mbi.BaseAddress, buffer.data(), mbi.RegionSize, &bytesRead)) {
-                // ASCII
+                
                 auto it = std::search(buffer.begin(), buffer.end(), targetAscii.begin(), targetAscii.end());
                 while (it != buffer.end()) {
                     SIZE_T offset = std::distance(buffer.begin(), it);
@@ -57,7 +57,7 @@ bool ScanAndClean(HANDLE hProc, LPCVOID startAddr, LPCVOID endAddr, const std::s
                     it = std::search(it + 1, buffer.end(), targetAscii.begin(), targetAscii.end());
                 }
 
-                // UTF-16
+                
                 const wchar_t* wideData = reinterpret_cast<const wchar_t*>(buffer.data());
                 size_t wcharCount = bytesRead / sizeof(wchar_t);
                 for (size_t i = 0; i + targetWide.size() < wcharCount; ++i) {
