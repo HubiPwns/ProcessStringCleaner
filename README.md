@@ -20,7 +20,7 @@ This project is designed **for educational purposes only** — to demonstrate ho
 
 ## Example
 
-<img width="672" height="261" alt="image" src="https://github.com/user-attachments/assets/1b5f0d8f-fc95-44bf-97a0-37ff0a7f07dc" />
+<img width="553" height="548" alt="image" src="https://github.com/user-attachments/assets/290aca99-0376-41e2-a629-cfa70f21a579" />
 
 
 ---
