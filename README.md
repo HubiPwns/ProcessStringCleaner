@@ -1,48 +1,76 @@
 # ProcessStringCleaner
 
-**ProcessStringCleaner** is a simple Windows-based C++ tool that scans the memory of a running process (`javaw.exe` by default) and wipes all instances of a user-provided string (in both ASCII and UTF-16 formats).
+**ProcessStringCleaner** is a Windows-based C++ tool that scans the memory of a running process, finds all occurrences of a user-specified string (both ASCII and UTF-16), and overwrites them with zero bytes.  
+The process name is entered by the user (e.g., `javaw.exe`), making it flexible for different targets.  
 
-🧠 This project was built for **educational purposes** — to explore how memory manipulation and scanning works on Windows systems using the WinAPI.
-
-## 🔧 Features
-
-- Scans the entire accessible memory of a running process.
-- Detects and wipes both ASCII and UTF-16 representations of a given string.
-- Uses low-level WinAPI functions like `ReadProcessMemory`, `WriteProcessMemory`, `VirtualQueryEx`.
-- Provides real-time feedback on where the string was found and cleared.
-
-## 📸 Example
-
-[?] Enter the string to clear (ASCII UTF-16): secret_token
-[+] javaw.exe PID: 3848
-[ASCII] Cleared at: 0x3f24000
-[UTF-16] Cleared at: 0x3f24810
-[*] Done in 112 ms.
-[+] Cleared!
-
-## 🛠️ How It Works
-
-1. Finds the target process by name (`javaw.exe`).
-2. Iterates over all readable and writable memory regions.
-3. Searches for the user-provided string in:
-   - ASCII (1-byte per char)
-   - UTF-16 (2 bytes per wchar)
-4. Overwrites found matches with zero bytes (0x00).
-
-## 🖥️ Requirements
-
-- Windows OS
-- C++ compiler supporting Windows API (`g++` via MinGW or MSVC)
-- Administrator privileges to access other process memory
-
-## 🚨 Disclaimer
-
-This project is **strictly for learning** how memory scanning and manipulation works. Do **not** use it against software you don't own or without permission. The author is **not responsible** for any misuse.
-
-## 📄 License
-
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+This project is designed **for educational purposes only** — to demonstrate how process enumeration, memory inspection, and direct memory modification work using the Windows API.
 
 ---
 
-> Created by **Hubi9warezz** — 2025  
+## Features
+
+- Search for a process by name and display its PID.
+- Confirm successful attachment to the target process.
+- Scan only committed, readable, and writable memory regions.
+- Detect and remove both ASCII (1-byte) and UTF-16 (2-byte) representations of the provided string.
+- Display real-time feedback with memory addresses where data was cleared.
+- Report execution time for the entire operation.
+
+---
+
+## Example
+
+<img width="672" height="261" alt="image" src="https://github.com/user-attachments/assets/1b5f0d8f-fc95-44bf-97a0-37ff0a7f07dc" />
+
+
+---
+
+## Technical details
+
+- **Language:** C++17  
+- **API used:** [Windows API](https://learn.microsoft.com/en-us/windows/win32/api/) via `windows.h`
+- **Key functions:**
+  - `CreateToolhelp32Snapshot`, `Process32FirstW`, `Process32NextW` – process enumeration.
+  - `OpenProcess` – obtaining a handle to the target process.
+  - `VirtualQueryEx` – querying memory regions.
+  - `ReadProcessMemory` / `WriteProcessMemory` – reading and modifying process memory.
+- **Encodings handled:**
+  - ASCII (1 byte per character)
+  - UTF-16 (wide characters, 2 bytes per character)
+- **Memory protection checks:** scans only non-guarded, committed memory with read/write permissions.
+
+---
+
+## What to keep in mind
+
+- You need **administrator privileges** to access memory of most processes.
+- Writing into a process's memory may cause instability or crashes — test only on processes you control.
+- This tool modifies **only in-memory data**, not data stored on disk.
+- Different processes may have different memory layouts; results may vary depending on target.
+- Use responsibly — this is meant for debugging, research, and controlled testing.
+
+---
+
+## Requirements
+
+- **Windows OS**
+- **C++ compiler** supporting Windows API (e.g., MSVC or MinGW)
+- Administrator rights for accessing protected process memory
+
+---
+
+## Disclaimer
+
+This tool is intended **solely for educational purposes**.  
+Do not use it against software you do not own or without explicit permission.  
+The author assumes **no responsibility** for any misuse or damage resulting from this program.
+
+---
+
+## License
+
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+
+---
+
+**Author:** Hubi9warezz — 2025
