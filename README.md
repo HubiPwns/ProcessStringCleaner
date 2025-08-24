@@ -73,4 +73,4 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 ---
 
-**Author:** Hubi9warezz — 2025
+**Author:** HubiPwns — 2025
